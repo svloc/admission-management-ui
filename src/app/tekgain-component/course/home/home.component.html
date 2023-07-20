@@ -8,7 +8,7 @@
         <ng-template pTemplate="caption">
             <p-toolbar styleClass="mb-4">
                 <div class="w-full flex justify-content-between">
-                    <button class="btn btn-danger" (click)="openNew()">Add Course +</button>
+                    <button class="btn btn-danger" (click)="openNew()" *ngIf="access(['ROLE_ADMIN'])">Add Course +</button>
                     <h2>Course List</h2>
                     <div>
                         <input type="text" class="form-input"
@@ -23,7 +23,7 @@
                 <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                     {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
-                <th>Action</th>
+                <th *ngIf="access(['ROLE_ADMIN'])">Action</th>
             </tr>
             <tr>
                 <th *ngFor="let col of columns">
@@ -31,7 +31,7 @@
                         (input)="dt1.filter($any($event.target)?.value, col.field, 'contains')"
                         [value]="$any(dt1.filters[col.field])?.value" placeholder="Search by ">
                 </th>
-                <th></th>
+                <th *ngIf="access(['ROLE_ADMIN'])"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -39,7 +39,7 @@
                 <td *ngFor="let col of columns">
                     {{rowData[col.field]}}
                 </td>
-                <td>
+                <td *ngIf="access(['ROLE_ADMIN'])">
                     <button class="btn btn-danger" (click)="editCourse(rowData)">Edit</button>
                     <button class="btn btn-outlined-danger ml-2" (click)="deleteCourse(rowData)">Delete </button>
                 </td>

@@ -8,7 +8,7 @@
         <ng-template pTemplate="caption">
             <p-toolbar styleClass="mb-4">
                 <div class="w-full flex justify-content-between">
-                    <button class="btn btn-danger" (click)="openNew()">Add Associate +</button>
+                    <button class="btn btn-danger" (click)="openNew()" *ngIf="access(['ROLE_ADMIN'])">Add Associate +</button>
                     <h2>Associate List</h2>
                     <div>
                         <input type="text" class="form-input"

@@ -11,7 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private courseService: CourseService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private courseService: CourseService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) {
+    this.currentUser = localStorage.getItem('roles');
+  }
+  currentUser: string = '';
+  role: string = 'ROLE_ADMIN';
   courses: Array<any> = [];
   cols: any[];
   courseDialog: boolean;
@@ -143,5 +147,11 @@ export class HomeComponent implements OnInit {
 
     }
   }
+
+
+  access(roles: string[]) {
+    return roles.some(x => x == this.currentUser);
+  }
+
 
 }

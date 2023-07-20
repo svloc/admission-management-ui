@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Course } from 'src/app/models/course';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdmissionService } from 'src/app/services/admission.service';
@@ -11,8 +10,13 @@ import { AdmissionService } from 'src/app/services/admission.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private admissionService: AdmissionService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private admissionService: AdmissionService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) {
+    this.currentUser = localStorage.getItem('roles');
+    this.associateId = localStorage.getItem('associateId');
 
+  }
+  currentUser: string = '';
+  role: string = 'ROLE_ADMIN';
   admissions: Array<any> = [];
   cols: any[];
   admissionDialog: boolean;
@@ -38,14 +42,25 @@ export class HomeComponent implements OnInit {
   }
 
   viewAll(): void {
-    this.admissionService.viewAllAdmissions().subscribe(
-      (res) => {
-        this.admissions = res;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (this.role == this.currentUser) {
+      this.admissionService.viewAllAdmissions().subscribe(
+        (res) => {
+          this.admissions = res;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.admissionService.viewByAssociateId(this.associateId).subscribe(
+        (res) => {
+          this.admissions = res;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   formSetup() {
@@ -127,5 +142,10 @@ export class HomeComponent implements OnInit {
 
     }
   }
+
+  access(roles: string[]) {
+    return roles.some(x => x == this.currentUser);
+  }
+
 
 }

@@ -10,7 +10,10 @@ import { AssociateService } from 'src/app/services/associate.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private associateService: AssociateService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private associateService: AssociateService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) { 
+    this.currentUser = localStorage.getItem('roles');
+    this.associateId = localStorage.getItem('associateId');
+  }
   
   associates: Array<any> = [];
   cols: any[];
@@ -22,7 +25,8 @@ export class HomeComponent implements OnInit {
   associateName: string = '';
   associateAddress: string = '';
   associateEmailId: string = '';
-
+  currentUser: string = '';
+  role: string = 'ROLE_ADMIN';
   ngOnInit() {
     this.formSetup();
     this.viewAll();
@@ -33,18 +37,27 @@ export class HomeComponent implements OnInit {
       { field: 'associateEmailId', header: 'EmailId' }
     ];
   }
-
   viewAll(): void {
-    this.associateService.viewAllAssociates().subscribe(
-      (res) => {
-        this.associates = res;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (this.role == this.currentUser) {
+      this.associateService.viewAllAssociates().subscribe(
+        (res) => {
+          this.associates = res;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.associateService.viewByAssociateId(this.associateId).subscribe(
+        (res) => {
+          this.associates = [res];
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   }
-
   formSetup() {
     this.addAssociateForm = this.formBuilder.group({
       associateId: [''],
@@ -113,5 +126,10 @@ export class HomeComponent implements OnInit {
 
     }
   }
+
+  access(roles: string[]) {
+    return roles.some(x => x == this.currentUser);
+  }
+
 
 }

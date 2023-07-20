@@ -27,4 +27,8 @@ export class AssociateService {
     return this.http.get(this.api_associate + '/associate/viewAll');
   }
 
+  viewByAssociateId(associateId: string): Observable<any> {
+    return this.http.get(this.api_associate + '/associate/viewByAssociateId/'+associateId);
+  }
+
 }

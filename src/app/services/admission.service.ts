@@ -54,4 +54,9 @@ export class AdmissionService {
     const admission = { registrationId: registrationId }
     return this.http.post(this.api_admission + `/admission/makePayment/${registrationId}/${fees}`, admission);
   }
+
+  //8
+  viewByAssociateId(associateId: string): Observable<any> {
+    return this.http.get(this.api_admission + '/admission/viewByAssociateId/'+associateId);
+  }
 }
