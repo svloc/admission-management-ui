@@ -20,7 +20,6 @@ export class AuthService {
   }
 
   addUser(user: User): Observable<Object> {
-    return this.http.post(`${this.api_auth}/signup`, user);
+    return this.http.post(`${this.api_auth}/registration`, user);
   }
-
 }

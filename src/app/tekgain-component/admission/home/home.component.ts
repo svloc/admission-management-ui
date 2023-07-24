@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdmissionService } from 'src/app/services/admission.service';
+import { AssociateService } from 'src/app/services/associate.service';
+import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,9 @@ import { AdmissionService } from 'src/app/services/admission.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private admissionService: AdmissionService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(private admissionService: AdmissionService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder, private associateService: AssociateService, private courseService: CourseService) {
     this.currentUser = localStorage.getItem('roles');
     this.associateId = localStorage.getItem('associateId');
-
   }
   currentUser: string = '';
   role: string = 'ROLE_ADMIN';
@@ -23,12 +24,15 @@ export class HomeComponent implements OnInit {
   public addAdmissionsForm: FormGroup;
   isEdit: boolean = false;
   isUpdateField: boolean = false;
-
+  selectedAssociateId: string = '';
   courseId: string = '';
   associateId: string = '';
   fees: number = 0;
   feedback: string = '';
   rating: number = 0;
+
+  associates: Array<any> = [];
+  courses: Array<any> = [];
 
   ngOnInit() {
     this.formSetup();
@@ -46,6 +50,8 @@ export class HomeComponent implements OnInit {
       this.admissionService.viewAllAdmissions().subscribe(
         (res) => {
           this.admissions = res;
+          this.viewAllAssociates(res);
+          this.viewAllCourses();
         },
         (error) => {
           console.log(error);
@@ -61,6 +67,25 @@ export class HomeComponent implements OnInit {
         }
       );
     }
+  }
+
+  viewAllAssociates(admissionData): void {
+    this.associateService.viewAllAssociates().subscribe(
+      (associates) => {
+        const filteredAssociates = associates.filter(
+          (associate) => !admissionData.some((admiss) => admiss.associateId === associate.associateId)
+        );
+        this.associates = filteredAssociates;
+      }
+    );
+  }
+
+  viewAllCourses(): void {
+    this.courseService.viewAllCourses().subscribe(
+      (res) => {
+        this.courses = res;
+      }
+    );
   }
 
   formSetup() {
@@ -102,7 +127,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  addCourse() {
+  addAdmissions() {
     if (!this.isEdit) {
       if (this.addAdmissionsForm.valid) {
         this.admissionService.registration(this.addAdmissionsForm.value.associateId, this.addAdmissionsForm.value.courseId).subscribe((suc) => {
@@ -143,9 +168,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
   access(roles: string[]) {
     return roles.some(x => x == this.currentUser);
   }
-
 
 }

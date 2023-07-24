@@ -9,7 +9,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import {DropdownModule} from 'primeng/dropdown';
 
 
 @NgModule({
@@ -25,7 +25,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ToolbarModule,
     ButtonModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DropdownModule
   ]
 })
 export class AdmissionModule { }

@@ -56,8 +56,9 @@
             <div class="my-3" *ngIf="!isEdit">
                 <div>
                     <label class="mb-3">Enter Associate Id</label>
-                    <input type="text" class="form-input" placeholder="Enter Associate Id" formControlName="associateId"
-                        [readonly]="isEdit" />
+                    <!-- <input type="text" class="form-input" placeholder="Enter Associate Id" formControlName="associateId"
+                        [readonly]="isEdit" /> -->
+                        <p-dropdown [options]="admissions" [(ngModel)]="selectedAssociateId" optionLabel="associateId"></p-dropdown>
                 </div>
                 <div *ngIf="addAdmissionsForm?.get('associateId').invalid && addAdmissionsForm?.get('associateId').touched"
                     class="text-red ml-1">
@@ -104,7 +105,7 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <button (click)="hideDialog()" class="btn btn-outlined-danger">Cancel</button>
-        <button class="btn btn-black" (click)="addCourse()" [disabled]="!addAdmissionsForm.valid"> {{ isEdit ? 'Update
+        <button class="btn btn-black" (click)="addAdmissions()" [disabled]="!addAdmissionsForm.valid"> {{ isEdit ? 'Update
             Admission':'Save Admission'}} </button>
     </ng-template>
 </p-dialog>
