@@ -24,19 +24,19 @@ export class HomeComponent implements OnInit {
   public addAdmissionsForm: FormGroup;
   isEdit: boolean = false;
   isUpdateField: boolean = false;
-  selectedAssociateId: string = '';
   courseId: string = '';
   associateId: string = '';
   fees: number = 0;
   feedback: string = '';
   rating: number = 0;
 
-  associates: Array<any> = [];
-  courses: Array<any> = [];
+  associates: Array<any> = [{associateId:'Select Associate Id'}];
+  courses: Array<any> = [{courseId:'Select Course Id'}];
 
   ngOnInit() {
     this.formSetup();
     this.viewAll();
+    this.viewAllCourses();
     this.cols = [
       { field: 'registrationId', header: 'Registration Id' },
       { field: 'courseId', header: 'Course Id' },
@@ -51,13 +51,15 @@ export class HomeComponent implements OnInit {
         (res) => {
           this.admissions = res;
           this.viewAllAssociates(res);
-          this.viewAllCourses();
         },
         (error) => {
           console.log(error);
         }
       );
     } else {
+      this.associates = [...this.associates,{ associateId: this.associateId }];
+      this.addAdmissionsForm.get('associateId').setValue(this.associateId);
+      this.addAdmissionsForm.get('associateId').updateValueAndValidity();
       this.admissionService.viewByAssociateId(this.associateId).subscribe(
         (res) => {
           this.admissions = res;
@@ -75,7 +77,7 @@ export class HomeComponent implements OnInit {
         const filteredAssociates = associates.filter(
           (associate) => !admissionData.some((admiss) => admiss.associateId === associate.associateId)
         );
-        this.associates = filteredAssociates;
+        this.associates = [...this.associates, ...filteredAssociates];
       }
     );
   }
@@ -83,7 +85,7 @@ export class HomeComponent implements OnInit {
   viewAllCourses(): void {
     this.courseService.viewAllCourses().subscribe(
       (res) => {
-        this.courses = res;
+        this.courses = [...this.courses,...res];
       }
     );
   }
@@ -91,9 +93,9 @@ export class HomeComponent implements OnInit {
   formSetup() {
     this.addAdmissionsForm = this.formBuilder.group({
       registrationId: [''],
-      courseId: ['', Validators.compose([Validators.required])],
-      associateId: ['', Validators.compose([Validators.required])],
-      fees: [0, Validators.compose([Validators.required])],
+      courseId: ['Select Course Id', Validators.compose([Validators.required])],
+      associateId: ['Select Associate Id', Validators.compose([Validators.required])],
+      fees: [0],
       feedback: [''],
       rating: [0]
     })

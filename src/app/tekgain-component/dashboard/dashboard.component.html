@@ -1,9 +1,9 @@
 <div class="fixed w-full flex h-4rem align-items-center justify-content-between px-3 bg-white topbar-box-shadow z-5">
     <h2>TekGain</h2>
-    <div class="flex justify-content-between w-3">
-        <span class="underline cursor-pointer" routerLink="/dashboard/course"><strong>Course</strong></span>
-        <span class="underline cursor-pointer" routerLink="/dashboard/admission"><strong>Admission</strong></span>
-        <span class="underline cursor-pointer" routerLink="/dashboard/associate"><strong>Associate</strong></span>
+    <div class="flex justify-content-between w-20rem">
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/associate" routerLinkActive="active-route"><strong>Associate</strong></span>
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/course" routerLinkActive="active-route"><strong>Course</strong></span>
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/admission" routerLinkActive="active-route"><strong>Admission</strong></span>
     </div>
     <div>
         <button class="btn btn-danger" (click)="logout()">Logout</button>

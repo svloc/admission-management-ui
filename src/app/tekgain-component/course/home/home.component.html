@@ -56,7 +56,7 @@
             <div class="my-3">
                 <div>
                     <label class="mb-3">Enter Course Name</label>
-                    <input type="text" class="form-input" placeholder="Enter Course Name" formControlName="courseName"
+                    <input type="text" class="form-input" formControlName="courseName"
                         [readonly]="isEdit" />
                 </div>
                 <div *ngIf="addCourseForm?.get('courseName').invalid && addCourseForm?.get('courseName').touched"
@@ -68,7 +68,7 @@
             <div class="my-3">
                 <div>
                     <label>Enter Fees</label>
-                    <input class="form-input" placeholder="Enter Fees" formControlName="fees" [readonly]="isEdit" />
+                    <input class="form-input" formControlName="fees" [readonly]="isEdit" />
                 </div>
                 <div *ngIf="addCourseForm.get('fees').invalid && addCourseForm.get('fees').touched"
                     class="text-red ml-1">
@@ -78,7 +78,7 @@
             <div class="my-3">
                 <div>
                     <label>Enter Duration</label>
-                    <input type="text" class="form-input" placeholder="Enter Duration" formControlName="duration" />
+                    <input type="text" class="form-input"  formControlName="duration" />
                 </div>
                 <div *ngIf="addCourseForm.get('duration').invalid && addCourseForm.get('duration').touched"
                     class="text-red ml-1">
@@ -89,7 +89,7 @@
             <div class="my-3">
                 <div>
                     <label>Enter Course Type</label>
-                    <input class="form-input" placeholder="Enter Course Type" formControlName="courseType"
+                    <input class="form-input" formControlName="courseType"
                         [readonly]="isEdit" />
                 </div>
                 <div *ngIf="addCourseForm.get('courseType').invalid && addCourseForm.get('courseType').touched"

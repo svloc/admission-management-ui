@@ -8,7 +8,8 @@
         <ng-template pTemplate="caption">
             <p-toolbar styleClass="mb-4">
                 <div class="w-full flex justify-content-between">
-                    <button class="btn btn-danger" (click)="openNew()" *ngIf="access(['ROLE_ADMIN'])">Add Admission +</button>
+                    <button class="btn btn-danger" (click)="openNew()">Add Admission
+                        +</button>
                     <h2>Admission List</h2>
                     <div>
                         <input type="text" class="form-input"
@@ -49,16 +50,15 @@
 </div>
 
 
-<p-dialog [(visible)]="admissionDialog" [style]="{width: '450px'}"
+<p-dialog [(visible)]="admissionDialog" [style]="{width: '450px','height':'450px','overflow':'auto'}"
     [header]="isEdit ? 'Update Admission':'Add Admission'" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <form [formGroup]="addAdmissionsForm" class="p-3 pt-0">
+
             <div class="my-3" *ngIf="!isEdit">
                 <div>
-                    <label class="mb-3">Enter Associate Id</label>
-                    <!-- <input type="text" class="form-input" placeholder="Enter Associate Id" formControlName="associateId"
-                        [readonly]="isEdit" /> -->
-                        <p-dropdown [options]="admissions" [(ngModel)]="selectedAssociateId" optionLabel="associateId"></p-dropdown>
+                    <p-dropdown [options]="associates" class="p-inputtext-sm" optionLabel="associateId"
+                        formControlName="associateId" optionValue="associateId"></p-dropdown>
                 </div>
                 <div *ngIf="addAdmissionsForm?.get('associateId').invalid && addAdmissionsForm?.get('associateId').touched"
                     class="text-red ml-1">
@@ -66,16 +66,23 @@
                             required</small></div>
                 </div>
             </div>
-            <div class="my-3">
+
+            <div class="my-3" *ngIf="!isEdit">
                 <div>
-                    <label>Enter Course Id</label>
-                    <input class="form-input" placeholder="Enter Course Id" formControlName="courseId"
-                        [readonly]="isEdit" />
+                    <p-dropdown [options]="courses" class="p-inputtext-sm" optionLabel="courseId"
+                        formControlName="courseId" optionValue="courseId"></p-dropdown>
+
                 </div>
                 <div *ngIf="addAdmissionsForm.get('courseId').invalid && addAdmissionsForm.get('courseId').touched"
                     class="text-red ml-1">
                     <div *ngIf="addAdmissionsForm.get('courseId').errors?.['required']"><small>Course Id is
                             required</small></div>
+                </div>
+            </div>
+            <div class="my-3" *ngIf="isEdit">
+                <div>
+                    <label>Course Id</label>
+                    <input class="form-input" formControlName="courseId" [readonly]="true" />
                 </div>
             </div>
 
@@ -105,7 +112,8 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <button (click)="hideDialog()" class="btn btn-outlined-danger">Cancel</button>
-        <button class="btn btn-black" (click)="addAdmissions()" [disabled]="!addAdmissionsForm.valid"> {{ isEdit ? 'Update
+        <button class="btn btn-black" (click)="addAdmissions()" [disabled]="!addAdmissionsForm.valid"> {{ isEdit ?
+            'Update
             Admission':'Save Admission'}} </button>
     </ng-template>
 </p-dialog>

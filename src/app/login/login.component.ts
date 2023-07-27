@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('isLoggedIn', JSON.stringify(true));
           localStorage.setItem('roles', suc.roles);
           localStorage.setItem('associateId', suc.associateId);
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/associate']);
         } else {
           Swal.fire('Oops', "suc.message", 'error');
         }
