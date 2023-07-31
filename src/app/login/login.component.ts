@@ -36,14 +36,25 @@ export class LoginComponent implements OnInit {
 
   loadSignupForm(): void {
     this.signupForm = this.formBuilder.group({
-      username: ['', Validators.compose([Validators.required])],
-      password: ['', Validators.compose([Validators.required])],
-      associateName: ['', Validators.compose([Validators.required])],
-      associateAddress: ['', Validators.compose([Validators.required])],
-      associateEmailId: ['', Validators.compose([Validators.required])],
+      username: ['', Validators.required],
+      password: ['',[Validators.required,Validators.pattern('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$')]],
+      associateName: ['',[Validators.required, Validators.pattern('^[A-Za-z ]{3,}$')]],
+      associateAddress: ['', Validators.required],
+      associateEmailId: ['', [Validators.required, Validators.email]]
+    });
+
+    this.signupForm.get('associateEmailId').valueChanges.subscribe((email: string) => {
+      const username = this.extractUsernameFromEmail(email);
+      this.signupForm.get('username').setValue(username);
     });
   }
-
+  private extractUsernameFromEmail(email: string): string {
+    const atIndex = email.indexOf('@');
+    if (atIndex !== -1) {
+      return email.slice(0, atIndex);
+    }
+    return '';
+  }
 
   toggleStatus(): void {
     this.isLogin = !this.isLogin;
@@ -82,7 +93,7 @@ export class LoginComponent implements OnInit {
         this.toggleStatus();
       },
         (err) => {
-          Swal.fire('Oops', 'Something went wrong', 'error');
+          Swal.fire('Oops', err.error, 'error');
         }
       );
     }
