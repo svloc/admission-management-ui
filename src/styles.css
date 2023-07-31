@@ -57,9 +57,17 @@ body {
     outline: 0;
     box-shadow: var(--box-shadow-input-focus) !important;
 }
+.form-label{
+  font-size: 0.875rem !important;
+  font-weight: 600;
+}
 
 input:-internal-autofill-selected {
     background-color: var(--white-color) !important;
+}
+input.ng-invalid.ng-touched {
+  box-shadow: var(--box-shadow-danger-btn-focus) !important;
+  border: 1px solid transparent;
 }
 
 .btn {

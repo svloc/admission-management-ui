@@ -81,15 +81,15 @@
             </div>
             <div class="my-3" *ngIf="isEdit">
                 <div>
-                    <label>Course Id</label>
+                    <label  class="form-label">Course Id</label>
                     <input class="form-input" formControlName="courseId" [readonly]="true" />
                 </div>
             </div>
 
             <div class="my-3" *ngIf="isEdit">
                 <div>
-                    <label class="mb-3">Enter Feedback</label>
-                    <input type="text" class="form-input" placeholder="Enter Feedback" formControlName="feedback" />
+                    <label class="form-label">Enter Feedback</label>
+                    <input type="text" class="form-input" formControlName="feedback" />
                 </div>
                 <div *ngIf="addAdmissionsForm.get('feedback').invalid && addAdmissionsForm.get('feedback').touched"
                     class="text-red ml-1">
@@ -99,13 +99,14 @@
             </div>
             <div class="my-3" *ngIf="isEdit">
                 <div>
-                    <label class="mb-3">Enter Rating</label>
-                    <input type="text" class="form-input" placeholder="Enter Rating" formControlName="rating" />
+                  <label class="form-label">Enter Rating</label>
+                  <input type="text" class="form-input" type="number" formControlName="rating" />
                 </div>
-                <div *ngIf="addAdmissionsForm.get('rating').invalid && addAdmissionsForm.get('rating').touched"
-                    class="text-red ml-1">
-                    <div *ngIf="addAdmissionsForm.get('rating').errors?.['required']"><small>Rating is required</small>
-                    </div>
+                <div *ngIf="addAdmissionsForm.get('rating').invalid && addAdmissionsForm.get('rating').touched" class="text-red ml-1">
+                  <div *ngIf="addAdmissionsForm.get('rating').errors?.required"><small>Rating is required</small></div>
+                  <div *ngIf="addAdmissionsForm.get('rating').errors?.min || addAdmissionsForm.get('rating').errors?.max">
+                    <small>Rating must be between 1 and 5</small>
+                  </div>
                 </div>
             </div>
         </form>

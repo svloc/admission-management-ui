@@ -55,7 +55,7 @@
         <form [formGroup]="addCourseForm" class="p-3 pt-0">
             <div class="my-3">
                 <div>
-                    <label class="mb-3">Enter Course Name</label>
+                    <label class="mb-3 form-label">Enter Course Name</label>
                     <input type="text" class="form-input" formControlName="courseName"
                         [readonly]="isEdit" />
                 </div>
@@ -67,28 +67,27 @@
             </div>
             <div class="my-3">
                 <div>
-                    <label>Enter Fees</label>
-                    <input class="form-input" formControlName="fees" [readonly]="isEdit" />
+                  <label class="form-label">Enter Fees</label>
+                  <input type="number" class="form-input" formControlName="fees" [readonly]="isEdit" />
                 </div>
-                <div *ngIf="addCourseForm.get('fees').invalid && addCourseForm.get('fees').touched"
-                    class="text-red ml-1">
-                    <div *ngIf="addCourseForm.get('fees').errors?.['required']"><small>Fees is required</small></div>
+                <div *ngIf="addCourseForm.get('fees').invalid && addCourseForm.get('fees').touched" class="text-red ml-1">
+                  <div *ngIf="addCourseForm.get('fees').errors?.required"><small>Fees is required</small></div>
+                  <div *ngIf="addCourseForm.get('fees').errors?.min"><small>Fees cannot be negative</small></div>
+                </div>
+            </div>  
+            <div class="my-3">
+                <div>
+                  <label class="form-label">Enter Duration</label>
+                  <input type="number" class="form-input" formControlName="duration" />
+                </div>
+                <div *ngIf="addCourseForm.get('duration').invalid && addCourseForm.get('duration').touched" class="text-red ml-1">
+                  <div *ngIf="addCourseForm.get('duration').errors?.required"><small>Duration is required</small></div>
+                  <div *ngIf="addCourseForm.get('duration').errors?.min"><small>Duration must be greater than zero</small></div>
                 </div>
             </div>
             <div class="my-3">
                 <div>
-                    <label>Enter Duration</label>
-                    <input type="text" class="form-input"  formControlName="duration" />
-                </div>
-                <div *ngIf="addCourseForm.get('duration').invalid && addCourseForm.get('duration').touched"
-                    class="text-red ml-1">
-                    <div *ngIf="addCourseForm.get('duration').errors?.['required']"><small>Duration is required</small>
-                    </div>
-                </div>
-            </div>
-            <div class="my-3">
-                <div>
-                    <label>Enter Course Type</label>
+                    <label class="form-label">Enter Course Type</label>
                     <input class="form-input" formControlName="courseType"
                         [readonly]="isEdit" />
                 </div>

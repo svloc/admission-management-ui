@@ -10,23 +10,24 @@ import { AssociateService } from 'src/app/services/associate.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  constructor(private associateService: AssociateService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) { 
+  constructor(private associateService: AssociateService, private _Activatedroute: ActivatedRoute, private formBuilder: FormBuilder) {
     this.currentUser = localStorage.getItem('roles');
     this.associateId = localStorage.getItem('associateId');
   }
-  
+
   associates: Array<any> = [];
   cols: any[];
   associateDialog: boolean;
   public addAssociateForm: FormGroup;
   isEdit: boolean = false;
-  
+
   associateId: string = '';
   associateName: string = '';
   associateAddress: string = '';
   associateEmailId: string = '';
   currentUser: string = '';
   role: string = 'ROLE_ADMIN';
+  errorMessage: string = '';
   ngOnInit() {
     this.formSetup();
     this.viewAll();
@@ -61,10 +62,9 @@ export class HomeComponent implements OnInit {
   formSetup() {
     this.addAssociateForm = this.formBuilder.group({
       associateId: [''],
-      associateName: ['', Validators.compose([Validators.required])],
-      associateAddress: ['', Validators.compose([Validators.required])],
-      associateEmailId: ['', Validators.compose([Validators.required])],
-    
+      associateName: ['', [Validators.required, Validators.pattern('^[A-Za-z ]{3,}$')]],
+      associateAddress: ['', Validators.required],
+      associateEmailId: ['', [Validators.required, Validators.email]]
     })
   }
 
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
     this.addAssociateForm.reset();
     this.associateDialog = true;
   }
-  
+
   editAssociate(associateObj: any) {
     this.isEdit = true;
     this.associateDialog = true;
@@ -89,20 +89,24 @@ export class HomeComponent implements OnInit {
   addAssociate() {
     if (!this.isEdit) {
       if (this.addAssociateForm.valid) {
-        this.associateService.addAssociate(this.addAssociateForm.value).subscribe((suc) => {
-          Swal.fire('Associate Added Successfully', 'success');
-          this.hideDialog();
-          this.addAssociateForm.reset();
-          this.viewAll();
-        },
-          (err) => {
-            if (err) {
-              Swal.fire(err);
-            } else {
-              Swal.fire('Oops', 'Something went wrong', 'error');
+        const emailId = this.addAssociateForm.value.associateEmailId;
+        const exists = this.associates.some(associate => associate.associateEmailId === emailId);
+        if (exists) {
+          console.log('Associate ID already exists');
+          this.errorMessage = 'Associate ID already exists';
+        } else {
+          this.associateService.addAssociate(this.addAssociateForm.value).subscribe((suc) => {
+            Swal.fire('Associate Added Successfully', 'success');
+            this.hideDialog();
+            this.addAssociateForm.reset();
+            this.viewAll();
+          },
+            (err) => {
+              console.log(err.error);
+              this.errorMessage = err.error;
             }
-          }
-        );
+          );
+        }
 
       }
     } else {

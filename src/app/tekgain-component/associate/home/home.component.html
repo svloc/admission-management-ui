@@ -54,37 +54,37 @@
         <form [formGroup]="addAssociateForm" class="p-3 pt-0">
             <div class="my-3">
                 <div>
-                    <label class="mb-3">Enter Associate Name</label>
-                    <input type="text" class="form-input" placeholder="Associate Name" formControlName="associateName"
-                        [readonly]="isEdit" />
+                    <label class="mb-3 form-label">Enter Associate Name</label>
+                    <input type="text" class="form-input" formControlName="associateName"[readonly]="isEdit" />
                 </div>
-                <div *ngIf="addAssociateForm?.get('associateName').invalid && addAssociateForm?.get('associateName').touched"
-                    class="text-red ml-1">
-                    <div *ngIf="addAssociateForm.get('associateName').errors?.['required']"><small>Associate Name is
-                            required</small></div>
+                <div *ngIf="addAssociateForm.get('associateName').invalid && addAssociateForm.get('associateName').touched" class="text-red ml-1">
+                  <div *ngIf="addAssociateForm.get('associateName').errors?.required"><small>Associate Name is required</small></div>
+                  <div *ngIf="addAssociateForm.get('associateName').errors?.pattern"><small>Invalid name. Only letters and spaces are allowed, minimum length is 3</small></div>
                 </div>
             </div>
             <div class="my-3">
                 <div>
-                    <label>Enter Associate Address</label>
-                    <input class="form-input" placeholder="Enter associateAddress" formControlName="associateAddress"  />
+                    <label class="form-label">Enter Associate Address</label>
+                    <input class="form-input"  formControlName="associateAddress"  />
                 </div>
                 <div *ngIf="addAssociateForm.get('associateAddress').invalid && addAssociateForm.get('associateAddress').touched"
                     class="text-red ml-1">
                     <div *ngIf="addAssociateForm.get('associateAddress').errors?.['required']"><small>Associate Address is required</small></div>
                 </div>
             </div>
+
             <div class="my-3">
                 <div>
-                    <label>Enter Associate EmailId</label>
-                    <input type="text" class="form-input" placeholder="Enter EmailId" formControlName="associateEmailId" [readonly]="isEdit"/>
+                    <label class="form-label">Enter Associate EmailId</label>
+                    <input type="text" class="form-input" formControlName="associateEmailId" [readonly]="isEdit"/>
                 </div>
-                <div *ngIf="addAssociateForm.get('associateEmailId').invalid && addAssociateForm.get('associateEmailId').touched"
-                    class="text-red ml-1">
-                    <div *ngIf="addAssociateForm.get('associateEmailId').errors?.['required']"><small>Associate EmailId is required</small>
-                    </div>
+                <div *ngIf="addAssociateForm.get('associateEmailId').invalid && addAssociateForm.get('associateEmailId').touched" class="text-red ml-1">
+                  <div *ngIf="addAssociateForm.get('associateEmailId').errors?.required"><small>Email is required</small></div>
+                  <div *ngIf="addAssociateForm.get('associateEmailId').errors?.email"><small>Invalid email address</small></div>
                 </div>
+                <div class="text-red ml-1" *ngIf="errorMessage"><small>{{errorMessage}}</small></div>
             </div>
+
         </form>
     </ng-template>
     <ng-template pTemplate="footer">

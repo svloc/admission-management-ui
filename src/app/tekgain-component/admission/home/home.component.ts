@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
     })
     if (this.isEdit) {
       this.addAdmissionsForm.get('feedback').setValidators(Validators.required);
-      this.addAdmissionsForm.get('rating').setValidators(Validators.required);
+      this.addAdmissionsForm.get('rating').setValidators([Validators.required,Validators.min(1), Validators.max(5)]);
     } else {
       this.addAdmissionsForm.get('feedback').clearValidators();
       this.addAdmissionsForm.get('rating').clearValidators();

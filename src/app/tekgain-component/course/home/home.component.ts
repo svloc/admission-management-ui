@@ -49,12 +49,12 @@ export class HomeComponent implements OnInit {
   formSetup() {
     this.addCourseForm = this.formBuilder.group({
       courseId: [''],
-      courseName: ['', Validators.compose([Validators.required])],
-      fees: [0, Validators.compose([Validators.required])],
-      duration: [0, Validators.compose([Validators.required])],
-      courseType: ['', Validators.compose([Validators.required])],
+      courseName: ['', Validators.required],
+      fees: [0, [Validators.required, Validators.min(0)]],
+      duration: [0, [Validators.required, Validators.min(1)]],
+      courseType: ['', Validators.required],
       rating: []
-    })
+    });
   }
 
   openNew() {
@@ -96,7 +96,6 @@ export class HomeComponent implements OnInit {
             this.viewAll();
           },
           (error) => {
-            console.log(error);
             Swal.fire(
               'No admissions found for the given course ID.',
               'error'
@@ -147,11 +146,7 @@ export class HomeComponent implements OnInit {
 
     }
   }
-
-
   access(roles: string[]) {
     return roles.some(x => x == this.currentUser);
   }
-
-
 }
