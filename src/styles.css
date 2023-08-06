@@ -176,3 +176,7 @@ table.customTable thead {
   height: 2.357rem !important;
 }
 
+.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background-color: var(--btn-black-color) !important;
+}
+

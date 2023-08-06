@@ -1,14 +1,45 @@
 <div class="fixed w-full flex h-4rem align-items-center justify-content-between px-3 bg-white topbar-box-shadow z-5">
     <h2>TekGain</h2>
     <div class="flex justify-content-between w-20rem">
-        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/associate" routerLinkActive="active-route"><strong>Associate</strong></span>
-        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/course" routerLinkActive="active-route"><strong>Course</strong></span>
-        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/admission" routerLinkActive="active-route"><strong>Admission</strong></span>
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/associate"
+            routerLinkActive="active-route"><strong>Associate</strong></span>
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/course"
+            routerLinkActive="active-route"><strong>Course</strong></span>
+        <span class="underline cursor-pointer padding-route" routerLink="/dashboard/admission"
+            routerLinkActive="active-route"><strong>Admission</strong></span>
     </div>
     <div>
         <button class="btn btn-danger" (click)="logout()">Logout</button>
     </div>
 </div>
+
 <div class="relative top-4rem container bg-white">
+    <div class="pt-5" *ngIf="isDashboardRoute()">
+
+        <p-carousel [value]="products" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true"
+            [autoplayInterval]="4000">
+            <ng-template let-product pTemplate="item">
+                <div class="product-item">
+                    <div class="product-item-content">
+                        <div class="mb-3">
+                            <img src="../../../assets/images/{{product.image}}" class="product-image" />
+                        </div>
+                        <div class="text-center">
+                            <h4 class="mb-1">{{product.title}}</h4>
+                            <h6 class="mt-0 mb-3">{{product.description}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+
+        <div class="card">
+            <h5>Course Metrics - Line Chart</h5>
+            <p-chart type="line" [data]="basicData"></p-chart>
+        </div>
+
+
+
+    </div>
     <router-outlet></router-outlet>
 </div>

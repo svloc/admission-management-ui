@@ -11,6 +11,9 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {DropdownModule} from 'primeng/dropdown';
+import {CarouselModule} from 'primeng/carousel';
+import {ChartModule} from 'primeng/chart';
+
 @NgModule({
   declarations: [
     DashboardComponent
@@ -25,7 +28,9 @@ import {DropdownModule} from 'primeng/dropdown';
     ButtonModule,
     DialogModule,
     ConfirmDialogModule,
-    DropdownModule
+    DropdownModule,
+    CarouselModule,
+    ChartModule
   ]
 })
 export class TekgainComponentModule { }

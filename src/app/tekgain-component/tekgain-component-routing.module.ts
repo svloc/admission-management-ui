@@ -6,7 +6,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component:DashboardComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    data: { isDashboard: true } 
   },
   {
     path: 'dashboard',
